@@ -1267,11 +1267,7 @@ function main() {
 <li>
   <a class="reference reference-toplevel" href="#12" id="62">Procs</a>
   <ul class="simple simple-toc-section">
-      <li><a class="reference" href="#shape,openArray[T],seq[int]"
-    title="shape[T: not char](s: openArray[T]; parent_shape: seq[int] = @ []): seq[int]"><wbr />shape<span class="attachedType" style="visibility:hidden"></span></a></li>
-  <li><a class="reference" href="#shape,,seq[int]"
-    title="shape(s: string | seq[char]; parent_shape: seq[int] = @ []): seq[int]"><wbr />shape<span class="attachedType" style="visibility:hidden"></span></a></li>
-  <li><a class="reference" href="#shallowCopy,Tensor[B,T]"
+      <li><a class="reference" href="#shallowCopy,Tensor[B,T]"
     title="shallowCopy[B, T](t: var Tensor[B, T]): Tensor[B, T]"><wbr />shallow<wbr />Copy<span class="attachedType" style="visibility:hidden">Tensor</span></a></li>
   <li><a class="reference" href="#newTensor,openArray[int],typedesc,"
     title="newTensor(shape: openArray[int]; T: typedesc; B: static[Backend]): Tensor[B, T]"><wbr />new<wbr />Tensor<span class="attachedType" style="visibility:hidden">Tensor</span></a></li>
@@ -1939,11 +1935,13 @@ function main() {
 <dt id="Backend"><a name="Backend"></a><pre><span class="Identifier">Backend</span> <span class="Other">=</span> <span class="Keyword">enum</span>
   <span class="Identifier">Cpu</span></pre></dt>
 <dd>
+<p><tt class="docutils literal"><span class="pre">Backend</span></tt> for tensor computation and memory allocation.</p>
+<p>Only Cpu is supported for now.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/data_structure.nim#L16"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/data_structure.nim#L16"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/data_structure.nim#L16" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/data_structure.nim#L16" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="Tensor"><a name="Tensor"></a><pre><span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other">=</span> <span class="Keyword">object</span>
@@ -1953,11 +1951,19 @@ class="link-seesrc" target="_blank">Source</a>
   <span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span>
 </pre></dt>
 <dd>
+<dl class="docutils"><dt>Tensor data structure</dt>
+<dd><ul class="simple"><li><tt class="docutils literal"><span class="pre">shape</span></tt>: Dimensions of the tensor</li>
+<li><tt class="docutils literal"><span class="pre">strides</span></tt>: Numbers of items to skip to get the next item along a dimension.</li>
+<li><tt class="docutils literal"><span class="pre">offset</span></tt>: Offset to get the first item of the Tensor. Note: offset can be negative, in particular for slices.</li>
+<li><tt class="docutils literal"><span class="pre">data</span></tt>: A sequence that holds the actual data</li>
+</ul>
+</dd>
+</dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/data_structure.nim#L22"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/data_structure.nim#L25"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/data_structure.nim#L22" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/data_structure.nim#L25" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="SteppedSlice"><a name="SteppedSlice"></a><pre><span class="Identifier">SteppedSlice</span> <span class="Other">=</span> <span class="Keyword">object</span>
@@ -1967,11 +1973,18 @@ class="link-seesrc" target="_blank">Source</a>
   <span class="Identifier">b_from_end</span><span class="Other">:</span> <span class="Identifier">bool</span>
 </pre></dt>
 <dd>
-A slice with step information and start is from beginning or end of range
+<dl class="docutils"><dt>A slice object related to a tensor single dimension:</dt>
+<dd><ul class="simple"><li>a, b: Respectively the beginning and the end of the range of the dimension</li>
+<li>step: The stepping of the slice (can be negative)</li>
+<li>a/b_from_end: Indicates if a/b should be counted from 0 or from the end of the tensor relevant dimension.</li>
+</ul>
+</dd>
+</dl>
+
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L55"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L55"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L55" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L55" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="Step"><a name="Step"></a><pre><span class="Identifier">Step</span> <span class="Other">=</span> <span class="Keyword">object</span>
@@ -1979,11 +1992,14 @@ class="link-seesrc" target="_blank">Source</a>
   <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span>
 </pre></dt>
 <dd>
-Holds the end of rang and step This is necessary to avoid parenthesis due to operator precedence of | over .. [0..10|1] is interpreted as [0..(10|1)]
+<p>Workaround to build <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt> without using parenthesis.</p>
+<p>Expected syntax is <tt class="docutils literal"><span class="pre">tensor[0..10|1]</span></tt>.</p>
+<p>Due to operator precedence of <tt class="docutils literal"><span class="pre">|</span></tt> over <tt class="docutils literal"><span class="pre">..</span></tt> [0..10|1] is interpreted as [0..(10|1)]</p>
+
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L62"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L65"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L62" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L65" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -1991,32 +2007,24 @@ class="link-seesrc" target="_blank">Source</a>
 <div class="section" id="12">
 <h1><a class="toc-backref" href="#12">Procs</a></h1>
 <dl class="item">
-<dt id="shape"><a name="shape,openArray[T],seq[int]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">shape</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Keyword">not</span> <span class="Identifier">char</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">parent_shape</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span> <span class="Other">=</span> <span class="Operator">@</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma">
-    <span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
-<dd>
-Helper function to get the shape of nested arrays/sequences C convention. Last index is the fastest changing (columns in 2D, depth in 3D) - Rows (slowest), Columns, Depth (fastest) The second argument &quot;shape&quot; is used for recursive call on nested arrays/sequences
-&nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/utils/nested_containers.nim#L18"
-class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/utils/nested_containers.nim#L18" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
-<dt id="shape"><a name="shape,,seq[int]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">shape</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Operator">|</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">char</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">parent_shape</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span> <span class="Other">=</span> <span class="Operator">@</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
-<dd>
-Handle char / string
-&nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/utils/nested_containers.nim#L42"
-class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/utils/nested_containers.nim#L42" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
 <dt id="shallowCopy"><a name="shallowCopy,Tensor[B,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">shallowCopy</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
+<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>A <tt class="docutils literal"><span class="pre">var</span></tt> tensor</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>A shallow copy.</li>
+</ul>
+</dd>
+<dt>WARNING !</dt>
+<dd>Both tensors shares the same memory. Data modification on one will be reflected on the other. However modifying the shape, strides or offset will not affect the other.</dd>
+</dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/data_structure.nim#L65"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/data_structure.nim#L102"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/data_structure.nim#L65" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/data_structure.nim#L102" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="newTensor"><a name="newTensor,openArray[int],typedesc,"></a><pre><span class="Keyword">proc</span> <span class="Identifier">newTensor</span><span class="Other">(</span><span class="Identifier">shape</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">;</span> <span class="Identifier">B</span><span class="Other">:</span> <span class="Keyword">static</span><span class="Other">[</span><span class="Identifier">Backend</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma">
@@ -2035,27 +2043,29 @@ Creates a new Tensor<dl class="docutils"><dt>Input:</dt>
 </dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/init.nim#L29"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/init.nim#L29"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/init.nim#L29" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/init.nim#L29" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="toTensor"><a name="toTensor,openArray,"></a><pre><span class="Keyword">proc</span> <span class="Identifier">toTensor</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">;</span> <span class="Identifier">B</span><span class="Other">:</span> <span class="Keyword">static</span><span class="Other">[</span><span class="Identifier">Backend</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">auto</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Convert an openarray to a Tensor TODO: have Backend.Cpu as default. pending <a class="reference external" href="https://github.com/nim-lang/Nim/issues/5864">https://github.com/nim-lang/Nim/issues/5864</a>
+Convert an openarray to a Tensor
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/init.nim#L56"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/init.nim#L56"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/init.nim#L56" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/init.nim#L56" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="toTensor"><a name="toTensor,string,"></a><pre><span class="Keyword">proc</span> <span class="Identifier">toTensor</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">B</span><span class="Other">:</span> <span class="Keyword">static</span><span class="Other">[</span><span class="Identifier">Backend</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">auto</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Handle string specifically
+<p>Convert an openarray to a Tensor</p>
+<p>Handle string specifically (otherwise they are interpreted as openarray[char])</p>
+
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/init.nim#L61"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/init.nim#L61"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/init.nim#L61" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/init.nim#L61" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="zeros"><a name="zeros,openArray[int],typedesc[T],"></a><pre><span class="Keyword">proc</span> <span class="Identifier">zeros</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">shape</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">typ</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">B</span><span class="Other">:</span> <span class="Keyword">static</span><span class="Other">[</span><span class="Identifier">Backend</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span>
@@ -2068,15 +2078,15 @@ Creates a new Tensor filled with 0<dl class="docutils"><dt>Input:</dt>
 </ul>
 </dd>
 <dt>Result:</dt>
-<dd><ul class="simple"><li>An zero-ed Tensor of the input shape</li>
+<dd><ul class="simple"><li>A zero-ed Tensor of the input shape</li>
 </ul>
 </dd>
 </dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/init.nim#L66"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/init.nim#L68"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/init.nim#L66" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/init.nim#L68" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="zeros_like"><a name="zeros_like,Tensor[B,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">zeros_like</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">:</span> <span class="Keyword">static</span><span class="Other">[</span><span class="Identifier">Backend</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma">
@@ -2089,15 +2099,15 @@ Creates a new Tensor filled with 0 with the same shape as the input<dl class="do
 </ul>
 </dd>
 <dt>Result:</dt>
-<dd><ul class="simple"><li>An zero-ed Tensor of the same shape</li>
+<dd><ul class="simple"><li>A zero-ed Tensor of the same shape</li>
 </ul>
 </dd>
 </dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/init.nim#L76"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/init.nim#L78"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/init.nim#L76" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/init.nim#L78" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="ones"><a name="ones,openArray[int],typedesc[T],"></a><pre><span class="Keyword">proc</span> <span class="Identifier">ones</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">shape</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">typ</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">B</span><span class="Other">:</span> <span class="Keyword">static</span><span class="Other">[</span><span class="Identifier">Backend</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span>
@@ -2110,15 +2120,15 @@ Creates a new Tensor filled with 1<dl class="docutils"><dt>Input:</dt>
 </ul>
 </dd>
 <dt>Result:</dt>
-<dd><ul class="simple"><li>A Tensor of one of the input shape</li>
+<dd><ul class="simple"><li>A one-ed Tensor of the same shape</li>
 </ul>
 </dd>
 </dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/init.nim#L86"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/init.nim#L88"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/init.nim#L86" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/init.nim#L88" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="ones_like"><a name="ones_like,Tensor[B,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">ones_like</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">:</span> <span class="Keyword">static</span><span class="Other">[</span><span class="Identifier">Backend</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma">
@@ -2129,257 +2139,399 @@ Creates a new Tensor filled with 0 with the same shape as the input and filled w
 </ul>
 </dd>
 <dt>Result:</dt>
-<dd><ul class="simple"><li>A Tensor of one of the input shape</li>
+<dd><ul class="simple"><li>A one-ed Tensor of the same shape</li>
 </ul>
 </dd>
 </dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/init.nim#L97"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/init.nim#L99"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/init.nim#L97" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/init.nim#L99" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="randomTensor"><a name="randomTensor,openArray[int],float,"></a><pre><span class="Keyword">proc</span> <span class="Identifier">randomTensor</span><span class="Other">(</span><span class="Identifier">shape</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">max</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">B</span><span class="Other">:</span> <span class="Keyword">static</span><span class="Other">[</span><span class="Identifier">Backend</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span>
     <span class="Identifier">float</span><span class="Other">]</span></pre></dt>
 <dd>
-Creates a new float Tensor filled with values between 0 and max Random seed can be set by importing random and <cite>randomize(seed)</cite>
+Creates a new float Tensor filled with values between 0 and max Random seed can be set by importing <tt class="docutils literal"><span class="pre">random</span></tt> and <tt class="docutils literal"><span class="pre">randomize(seed)</span></tt><dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>a shape</li>
+<li>the max value possible (float)</li>
+<li>a tensor backend</li>
+</ul>
+</dd>
+<dt>Result:</dt>
+<dd><ul class="simple"><li>A tensor of the input shape filled with random value between 0 and max input value</li>
+</ul>
+</dd>
+</dl>
+
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/init.nim#L110"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/init.nim#L112"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/init.nim#L110" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/init.nim#L112" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="randomTensor"><a name="randomTensor,openArray[int],int,"></a><pre><span class="Keyword">proc</span> <span class="Identifier">randomTensor</span><span class="Other">(</span><span class="Identifier">shape</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">max</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">B</span><span class="Other">:</span> <span class="Keyword">static</span><span class="Other">[</span><span class="Identifier">Backend</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">int</span><span class="Other">]</span></pre></dt>
 <dd>
-Creates a new int Tensor filled with values between 0 and max-1 Random seed can be set by importing random and <cite>randomize(seed)</cite>
+Creates a new int Tensor filled with values between 0 and max-1 Random seed can be set by importing <tt class="docutils literal"><span class="pre">random</span></tt> and <tt class="docutils literal"><span class="pre">randomize(seed)</span></tt><dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>a shape</li>
+<li>the max value possible (integer, exclusive)</li>
+<li>a tensor backend</li>
+</ul>
+</dd>
+<dt>Result:</dt>
+<dd><ul class="simple"><li>A tensor of the input shape filled with random value between 0 and max input value (excluded)</li>
+</ul>
+</dd>
+</dl>
+
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/init.nim#L115"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/init.nim#L123"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/init.nim#L115" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/init.nim#L123" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="randomTensor"><a name="randomTensor,openArray[int],Slice[T],"></a><pre><span class="Keyword">proc</span> <span class="Identifier">randomTensor</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">shape</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">slice</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">B</span><span class="Other">:</span> <span class="Keyword">static</span><span class="Other">[</span><span class="Identifier">Backend</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span>
     <span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span></pre></dt>
 <dd>
-Creates a new int Tensor filled with values in the Slice range. Random seed can be set by importing random and <cite>randomize(seed)</cite>
+Creates a new int Tensor filled with values in the Slice range. Random seed can be set by importing <tt class="docutils literal"><span class="pre">random</span></tt> and <tt class="docutils literal"><span class="pre">randomize(seed)</span></tt><dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>a shape</li>
+<li>a range/slice</li>
+<li>a tensor backend</li>
+</ul>
+</dd>
+<dt>Result:</dt>
+<dd><ul class="simple"><li>A tensor of the input shape filled with random value in the slice range</li>
+</ul>
+</dd>
+</dl>
+
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/init.nim#L120"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/init.nim#L134"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/init.nim#L120" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/init.nim#L134" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="values"><a name="values,Tensor[B,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">values</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">auto</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Closure stride-aware iterator on Tensor values
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors.nim#L80"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors.nim#L80"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors.nim#L80" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors.nim#L80" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="|"><a name="|,Slice[int],int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|`</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
+A <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt> constructor<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>a slice</li>
+<li>a step</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt></li>
+</ul>
+</dd>
+</dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L98"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L103"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L98" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L103" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="|"><a name="|,int,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|`</span><span class="Other">(</span><span class="Identifier">b</span><span class="Other">,</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Step</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
+<p>A <tt class="docutils literal"><span class="pre">Step</span></tt> constructor</p>
+<p><tt class="docutils literal"><span class="pre">Step</span></tt> is a workaround due to operator precedence.</p>
+<p>[0..10|1] is interpreted as [0..(10|1)]</p>
+<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>the end of a slice range</li>
+<li>a step</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">Step</span></tt></li>
+</ul>
+</dd>
+</dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L101"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L112"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L101" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L112" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="|"><a name="|,SteppedSlice,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|`</span><span class="Other">(</span><span class="Identifier">ss</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span><span class="Other">;</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
+Modifies the step of a <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt><dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">SteppedSLice</span></tt></li>
+<li>the new stepping</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">SteppedSLice</span></tt></li>
+</ul>
+</dd>
+</dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L104"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L125"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L104" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L125" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="|+"><a name="|+,Slice[int],int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|+`</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Alias
+Alias for <tt class="docutils literal"><span class="pre">|</span></tt>
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L108"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L135"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L108" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L135" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="|+"><a name="|+,int,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|+`</span><span class="Other">(</span><span class="Identifier">b</span><span class="Other">,</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Step</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Alias
+Alias for <tt class="docutils literal"><span class="pre">|</span></tt>
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L112"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L139"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L112" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L139" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="|+"><a name="|+,SteppedSlice,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|+`</span><span class="Other">(</span><span class="Identifier">ss</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span><span class="Other">;</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Alias
+Alias for <tt class="docutils literal"><span class="pre">|</span></tt>
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L116"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L143"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L116" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L143" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="|-"><a name="|-,Slice[int],int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|-`</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
+<p>A <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt> constructor</p>
+<p>Workaround to tensor[slice|-1] being interpreted as [slice <cite>|-</cite> 1]</p>
+<p>Properly create <tt class="docutils literal"><span class="pre">SteppedSLice</span></tt> with negative stepping</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L120"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L147"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L120" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L147" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="|-"><a name="|-,int,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|-`</span><span class="Other">(</span><span class="Identifier">b</span><span class="Other">,</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Step</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
+<p>A <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt> constructor</p>
+<p>Workaround to tensor[0..10|-1] being intepreted as [0 .. (10 <cite>|-</cite> 1)]</p>
+<p>Properly create <tt class="docutils literal"><span class="pre">SteppedSLice</span></tt> with negative stepping</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L123"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L155"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L123" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L155" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="|-"><a name="|-,SteppedSlice,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|-`</span><span class="Other">(</span><span class="Identifier">ss</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span><span class="Other">;</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
+<p>Modifies the step of a <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt></p>
+<p>Workaround to tensor[slice|-1] being interpreted as [slice <cite>|-</cite> 1]</p>
+<p>Properly create <tt class="docutils literal"><span class="pre">SteppedSLice</span></tt> with negative stepping</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L126"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L163"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L126" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L163" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id=".."><a name="..,int,Step"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`..`</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Step</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
+Build a SteppedSlice from [a .. (b|step)] (workaround to operator precedence)<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>the beginning of the slice range</li>
+<li>a <tt class="docutils literal"><span class="pre">Step</span></tt> workaround object</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt>, end of range will be inclusive</li>
+</ul>
+</dd>
+</dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L130"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L172"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L130" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L172" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="..<"><a name="..<,int,Step"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`..&lt;`</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Step</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
+Build a SteppedSlice from [a ..&lt; (b|step)] (workaround to operator precedence and ..&lt;b not being interpreted as .. &lt;b)<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>the beginning of the slice range</li>
+<li>a <tt class="docutils literal"><span class="pre">Step</span></tt> workaround object</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt>, end of range will be exclusive.</li>
+</ul>
+</dd>
+</dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L133"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L181"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L133" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L181" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="..^"><a name="..^,int,Step"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`..^`</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Step</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
+Build a SteppedSlice from [a ..^ (b|step)] (workaround to operator precedence and ..^b not being interpreted as .. ^b)<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>the beginning of the slice range</li>
+<li>a <tt class="docutils literal"><span class="pre">Step</span></tt> workaround object</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt>, end of range will start at &quot;b&quot; away from the end</li>
+</ul>
+</dd>
+</dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L136"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L190"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L136" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L190" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="^"><a name="^,SteppedSlice"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`^`</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-
+Prefix to a to indicate starting the slice at &quot;a&quot; away from the end Note: This does not automatically inverse stepping, what if we want ^5..^1
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L139"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L199"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L139" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L199" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="^"><a name="^,Slice"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`^`</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-
+Prefix to a to indicate starting the slice at &quot;a&quot; away from the end Note: This does not automatically inverse stepping, what if we want ^5..^1
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L144"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L205"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L144" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L205" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="=="><a name="==,Tensor[B,T],Tensor[B,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`==`</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Tensor comparison
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/comparison.nim#L15"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/comparison.nim#L15"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/comparison.nim#L15" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/comparison.nim#L15" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="transpose"><a name="transpose,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">transpose</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Transpose a Tensor. For N-d Tensor with shape (0, 1, 2 ... n-1) the resulting tensor will have shape (n-1, ... 2, 1, 0) Data is copied as is and not modified.
+<p>Transpose a Tensor.</p>
+<p>For N-d Tensor with shape (0, 1, 2 ... n-1) the resulting tensor will have shape (n-1, ... 2, 1, 0)</p>
+<p>Data is copied as-is and not modified.</p>
+
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/shapeshifting.nim#L26"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/shapeshifting.nim#L26"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/shapeshifting.nim#L26" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/shapeshifting.nim#L26" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="asContiguous"><a name="asContiguous,Tensor[B,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">asContiguous</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Transform a tensor with general striding to a Row major Tensor
+Transform a tensor with general striding to a row major Tensor
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/shapeshifting.nim#L36"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/shapeshifting.nim#L38"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/shapeshifting.nim#L36" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/shapeshifting.nim#L38" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="reshape"><a name="reshape,Tensor,varargs[int]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">reshape</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">;</span> <span class="Identifier">new_shape</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Reshape a tensor TODO: tests TODO: fuse toTensor.reshape
+Reshape a tensor<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>a tensor</li>
+<li>a new shape. Number of elements must be the same</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a tensor with the same data but reshaped.</li>
+</ul>
+</dd>
+</dl>
+
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/shapeshifting.nim#L83"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/shapeshifting.nim#L85"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/shapeshifting.nim#L83" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/shapeshifting.nim#L85" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="broadcast"><a name="broadcast,Tensor[B,T],openArray[int]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">broadcast</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">shape</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Broadcasting array Todo: proper bound-checking todo: testing TODO: use term-rewriting macro to have t1.bc * t2.bc broadcasted in compatible shape
+<p>Broadcast array</p>
+<p>Dimension(s) of size 1 can be expanded to arbitrary size by replicating values along that dimension.</p>
+
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/shapeshifting.nim#L95"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/shapeshifting.nim#L100"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/shapeshifting.nim#L95" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/shapeshifting.nim#L100" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="permute"><a name="permute,Tensor,varargs[int]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">permute</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">;</span> <span class="Identifier">dims</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
+Permute dimensions<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>a tensor</li>
+<li>the new dimension order</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a tensor with re-order dimension</li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<p>a.permute(0,2,1) # dim 0 stays at 0, dim 1 becomes dim 2 and dim 2 becomes dim 1</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/shapeshifting.nim#L123"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/shapeshifting.nim#L131"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/shapeshifting.nim#L123" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/shapeshifting.nim#L131" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="concat"><a name="concat,varargs[Tensor[B,T]],int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">concat</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t_list</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">axis</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Setup the Tensor
+Concatenate tensors<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>Tensors</li>
+<li>An axis (dimension)</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a tensor</li>
+</ul>
+</dd>
+</dl>
+
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/shapeshifting.nim#L139"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/shapeshifting.nim#L156"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/shapeshifting.nim#L139" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/shapeshifting.nim#L156" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="$"><a name="$,Tensor[B,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`$`</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-
+Pretty-print a tensor (when using <tt class="docutils literal"><span class="pre">echo</span></tt> for example)
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/display.nim#L129"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/display.nim#L129"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/display.nim#L129" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/display.nim#L129" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="astype"><a name="astype,Tensor[B,T],typedesc[U]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">astype</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">:</span> <span class="Keyword">static</span><span class="Other">[</span><span class="Identifier">Backend</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">,</span> <span class="Identifier">U</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">typ</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><span class="Identifier">U</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">U</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma">
@@ -2387,18 +2539,18 @@ class="link-seesrc" target="_blank">Source</a>
 <dd>
 Apply type conversion on the whole tensor
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L15"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L15"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L15" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L15" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="fmap"><a name="fmap,Tensor[B,T],"></a><pre><span class="Keyword">proc</span> <span class="Identifier">fmap</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">:</span> <span class="Keyword">static</span><span class="Other">[</span><span class="Identifier">Backend</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">,</span> <span class="Identifier">U</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">g</span><span class="Other">:</span> <span class="Identifier">T</span> <span class="Operator">-&gt;</span> <span class="Identifier">U</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">U</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Map a unary function T -&gt; U on Tensor[T]
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L22"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L22"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L22" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L22" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="fac"><a name="fac,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">fac</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145165</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2407,9 +2559,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="sqrt"><a name="sqrt,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">sqrt</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145209</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2418,9 +2570,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="cbrt"><a name="cbrt,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">cbrt</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145253</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2429,9 +2581,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="ln"><a name="ln,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">ln</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145297</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2440,9 +2592,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="log10"><a name="log10,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">log10</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145341</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2451,9 +2603,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="log2"><a name="log2,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">log2</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145385</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2462,9 +2614,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="exp"><a name="exp,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">exp</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145429</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2473,9 +2625,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="arccos"><a name="arccos,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">arccos</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145473</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2484,9 +2636,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="arcsin"><a name="arcsin,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">arcsin</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145517</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2495,9 +2647,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="arctan"><a name="arctan,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">arctan</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145561</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2506,9 +2658,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="cos"><a name="cos,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">cos</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145605</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2517,9 +2669,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="cosh"><a name="cosh,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">cosh</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145649</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2528,9 +2680,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="sinh"><a name="sinh,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">sinh</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145693</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2539,9 +2691,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="sin"><a name="sin,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">sin</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145737</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2550,9 +2702,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="tan"><a name="tan,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">tan</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145781</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2561,9 +2713,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="tanh"><a name="tanh,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">tanh</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145825</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2572,9 +2724,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="erf"><a name="erf,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">erf</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145869</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2583,9 +2735,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="erfc"><a name="erfc,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">erfc</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145913</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2594,9 +2746,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="lgamma"><a name="lgamma,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">lgamma</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">145957</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2605,9 +2757,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="tgamma"><a name="tgamma,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">tgamma</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">146001</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2616,9 +2768,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="floor"><a name="floor,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">floor</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">146045</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2627,9 +2779,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="ceil"><a name="ceil,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">ceil</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">146089</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2638,9 +2790,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="trunc"><a name="trunc,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">trunc</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">146133</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2649,9 +2801,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="round"><a name="round,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">round</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">146177</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2660,9 +2812,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="degToRad"><a name="degToRad,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">degToRad</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">146221</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2671,9 +2823,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="radToDeg"><a name="radToDeg,Tensor"></a><pre><span class="Keyword">proc</span> <span class="Identifier">radToDeg</span><span class="Other">(</span><span class="Identifier">t</span><span class="DecNumber">146265</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span></pre></dt>
@@ -2682,117 +2834,117 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L43"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L45"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id=".*"><a name=".*,Tensor[Backend,T],Tensor[Backend,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`.*`</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeReal</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Vector to Vector dot (scalar) product
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/operators_blas.nim#L48"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/operators_blas.nim#L48"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/operators_blas.nim#L48" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/operators_blas.nim#L48" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id=".*"><a name=".*,Tensor[Backend,T],Tensor[Backend,T]_2"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`.*`</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeInteger</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Vector to Vector dot (scalar) product
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/operators_blas.nim#L53"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/operators_blas.nim#L53"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/operators_blas.nim#L53" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/operators_blas.nim#L53" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="+"><a name="+,Tensor[Backend,T],Tensor[Backend,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`+`</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Tensor addition
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/operators_blas.nim#L60"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/operators_blas.nim#L60"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/operators_blas.nim#L60" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/operators_blas.nim#L60" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="+="><a name="+=,Tensor[Backend,T],Tensor[Backend,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`+=`</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Tensor in-place addition
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/operators_blas.nim#L73"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/operators_blas.nim#L73"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/operators_blas.nim#L73" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/operators_blas.nim#L73" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="-"><a name="-,Tensor[Backend,T],Tensor[Backend,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`-`</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Tensor addition
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/operators_blas.nim#L81"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/operators_blas.nim#L81"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/operators_blas.nim#L81" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/operators_blas.nim#L81" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="-="><a name="-=,Tensor[Backend,T],Tensor[Backend,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`-=`</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Tensor in-place addition
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/operators_blas.nim#L94"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/operators_blas.nim#L94"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/operators_blas.nim#L94" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/operators_blas.nim#L94" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="*"><a name="*,T,Tensor[Backend,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`*`</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">T</span><span class="Other">;</span> <span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-
+Element-wise multiplication by a scalar
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/operators_blas.nim#L102"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/operators_blas.nim#L102"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/operators_blas.nim#L102" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/operators_blas.nim#L102" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="*"><a name="*,Tensor[Backend,T],T"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`*`</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">T</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-
+Element-wise multiplication by a scalar
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/operators_blas.nim#L106"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/operators_blas.nim#L107"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/operators_blas.nim#L106" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/operators_blas.nim#L107" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="/"><a name="/,Tensor[Backend,T],T"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`/`</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">T</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-
+Element-wise division by a scalar
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/operators_blas.nim#L110"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/operators_blas.nim#L112"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/operators_blas.nim#L110" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/operators_blas.nim#L112" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="*"><a name="*,Tensor[Backend,T],Tensor[Backend,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`*`</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeReal</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Matrix multiplication (Matrix-Matrix and Matrix-Vector)
+Matrix multiplication (Matrix-Matrix and Matrix-Vector) Float operations use optimized BLAS
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/operators_blas.nim#L255"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/operators_blas.nim#L258"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/operators_blas.nim#L255" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/operators_blas.nim#L258" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="*"><a name="*,Tensor[Backend,T],Tensor[Backend,T]_2"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`*`</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeInteger</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-
+Matrix multiplication fallback for integer tensor
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/operators_blas.nim#L270"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/operators_blas.nim#L274"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/operators_blas.nim#L270" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/operators_blas.nim#L274" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="|*|"><a name="|*|,Tensor[Backend,T],Tensor[Backend,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|*|`</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">Cpu</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Element-wise multiplication (hadamard product) TODO: find a good symbol
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/operators_extra.nim#L15"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/operators_extra.nim#L15"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/operators_extra.nim#L15" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/operators_extra.nim#L15" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="agg"><a name="agg,Tensor[B,T],,T"></a><pre><span class="Keyword">proc</span> <span class="Identifier">agg</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">f</span><span class="Other">:</span> <span class="Other">(</span><span class="Identifier">T</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">)</span> <span class="Operator">-&gt;</span> <span class="Identifier">T</span><span class="Other">;</span> <span class="Identifier">start_val</span><span class="Other">:</span> <span class="Identifier">T</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
@@ -2807,9 +2959,9 @@ Compute the aggregate<dl class="docutils"><dt>Input:</dt>
 </dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/aggregate.nim#L21"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/aggregate.nim#L21"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/aggregate.nim#L21" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/aggregate.nim#L21" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="agg_inplace"><a name="agg_inplace,T,proc(T,T),Tensor[B,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">agg_inplace</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">accum_val</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span><span class="Other">;</span> <span class="Identifier">f</span><span class="Other">:</span> <span class="Keyword">proc</span> <span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">T</span><span class="Other">)</span><span class="Other">;</span>
@@ -2825,9 +2977,9 @@ Compute the aggregate<dl class="docutils"><dt>Input:</dt>
 </dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/aggregate.nim#L35"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/aggregate.nim#L35"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/aggregate.nim#L35" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/aggregate.nim#L35" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="agg"><a name="agg,Tensor[B,T],,Tensor[B,T],int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">agg</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span>
@@ -2835,7 +2987,7 @@ class="link-seesrc" target="_blank">Source</a>
                         <span class="Identifier">start_val</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">axis</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma">
     <span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Compute the aggregate<dl class="docutils"><dt>Input:</dt>
+Compute the aggregate along an axis<dl class="docutils"><dt>Input:</dt>
 <dd><ul class="simple"><li>A tensor to aggregate on</li>
 <li>The aggregation function. It is applied this way: new_aggregate = f(old_aggregate, current_value)</li>
 <li>The starting value</li>
@@ -2845,16 +2997,16 @@ Compute the aggregate<dl class="docutils"><dt>Input:</dt>
 </dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/aggregate.nim#L53"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/aggregate.nim#L53"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/aggregate.nim#L53" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/aggregate.nim#L53" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="agg_inplace"><a name="agg_inplace,Tensor[B,T],proc(Tensor[B,T],Tensor[B,T]),Tensor[B,T],int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">agg_inplace</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">accum_val</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span>
                                 <span class="Identifier">f</span><span class="Other">:</span> <span class="Keyword">proc</span> <span class="Other">(</span><span class="Identifier">x</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">;</span>
                                 <span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">axis</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Compute the aggregate<dl class="docutils"><dt>Input:</dt>
+Compute the aggregate along an axis<dl class="docutils"><dt>Input:</dt>
 <dd><ul class="simple"><li>The accumulating value which will be modified in-place</li>
 <li>A tensor to aggregate from</li>
 <li>The aggregation in-place function. It is applied this way: f(var old_aggregate, current_value)</li>
@@ -2864,45 +3016,45 @@ Compute the aggregate<dl class="docutils"><dt>Input:</dt>
 </dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/aggregate.nim#L69"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/aggregate.nim#L69"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/aggregate.nim#L69" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/aggregate.nim#L69" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="sum"><a name="sum,Tensor[B,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">sum</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-
+Compute the sum of all elements of T
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/aggregate.nim#L88"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/aggregate.nim#L88"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/aggregate.nim#L88" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/aggregate.nim#L88" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="sum"><a name="sum,Tensor[B,T],int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">sum</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">axis</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-
+Compute the sum of all elements of T along an axis
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/aggregate.nim#L95"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/aggregate.nim#L95"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/aggregate.nim#L95" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/aggregate.nim#L95" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="mean"><a name="mean,Tensor[B,T]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">mean</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeReal</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-
+Compute the mean of all elements of T
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/aggregate.nim#L104"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/aggregate.nim#L104"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/aggregate.nim#L104" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/aggregate.nim#L104" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="mean"><a name="mean,Tensor[B,T],int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">mean</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">:</span> <span class="Identifier">SomeReal</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">axis</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-
+Compute the mean of T along an axis
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/aggregate.nim#L109"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/aggregate.nim#L109"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/aggregate.nim#L109" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/aggregate.nim#L109" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -2914,36 +3066,36 @@ class="link-seesrc" target="_blank">Source</a>
 <dd>
 Inline stride-aware iterator on Tensor values
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors.nim#L76"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors.nim#L76"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors.nim#L76" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors.nim#L76" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="mitems"><a name="mitems.i,Tensor[B,T]"></a><pre><span class="Keyword">iterator</span> <span class="Identifier">mitems</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Inline stride-aware iterator on Tensor values. Values yielded can be directly modified and avoid bound-checking/index calculation with t[index] = val
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors.nim#L84"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors.nim#L84"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors.nim#L84" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors.nim#L84" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="pairs"><a name="pairs.i,Tensor[B,T]"></a><pre><span class="Keyword">iterator</span> <span class="Identifier">pairs</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Other">(</span><span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">)</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Inline stride-aware iterator on Tensor coordinates i.e. [1,2,3] and values
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors.nim#L90"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors.nim#L90"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors.nim#L90" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors.nim#L90" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="axis"><a name="axis.i,Tensor[B,T],int"></a><pre><span class="Keyword">iterator</span> <span class="Identifier">axis</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">axis</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Iterates over an axis
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors.nim#L104"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors.nim#L104"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors.nim#L104" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors.nim#L104" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -2953,20 +3105,50 @@ class="link-seesrc" target="_blank">Source</a>
 <dl class="item">
 <dt id="[]"><a name="[].m,Tensor[B,T],varargs[untyped]"></a><pre><span class="Keyword">macro</span> <span class="Identifier">`[]`</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">args</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">untyped</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">untyped</span></pre></dt>
 <dd>
+<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>a tensor</li>
+<li>and:<ul class="simple"><li>specific coordinates (<tt class="docutils literal"><span class="pre">varargs[int]</span></tt>)</li>
+<li>or a slice (cf. tutorial)</li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a value or a tensor corresponding to the slice</li>
+</ul>
+</dd>
+</dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L364"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L426"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L364" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L426" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="[]="><a name="[]=.m,Tensor[B,T],varargs[untyped]"></a><pre><span class="Keyword">macro</span> <span class="Identifier">`[]=`</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">args</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">untyped</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">untyped</span></pre></dt>
 <dd>
-varargs[untyped] consumes all arguments so the actual value should be popped <a class="reference external" href="https://github.com/nim-lang/Nim/issues/5855">https://github.com/nim-lang/Nim/issues/5855</a>
+Modifies the input<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">var</span></tt> tensor</li>
+<li>a location:<ul class="simple"><li>specific coordinates (<tt class="docutils literal"><span class="pre">varargs[int]</span></tt>)</li>
+<li>or a slice (cf. tutorial)</li>
+</ul>
+</li>
+<li>a value:<ul class="simple"><li>a single value that will<ul class="simple"><li>replace the value at the specific coordinates</li>
+<li>or be applied to the whole slice</li>
+</ul>
+</li>
+<li>an openarray with a shape that matches the slice</li>
+<li>a tensor with a shape that matches the slice</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/accessors_slicer.nim#L421"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/accessors_slicer.nim#L490"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/accessors_slicer.nim#L421" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/accessors_slicer.nim#L490" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -2976,56 +3158,108 @@ class="link-seesrc" target="_blank">Source</a>
 <dl class="item">
 <dt id="shape"><a name="shape.t,Tensor"></a><pre><span class="Keyword">template</span> <span class="Identifier">shape</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span></pre></dt>
 <dd>
+<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>A tensor</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>Its shape</li>
+</ul>
+</dd>
+</dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/data_structure.nim#L29"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/data_structure.nim#L37"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/data_structure.nim#L29" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/data_structure.nim#L37" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="strides"><a name="strides.t,Tensor"></a><pre><span class="Keyword">template</span> <span class="Identifier">strides</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span></pre></dt>
 <dd>
+<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>A tensor</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>Its strides</li>
+</ul>
+</dd>
+</dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/data_structure.nim#L30"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/data_structure.nim#L44"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/data_structure.nim#L30" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/data_structure.nim#L44" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="offset"><a name="offset.t,Tensor"></a><pre><span class="Keyword">template</span> <span class="Identifier">offset</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span></pre></dt>
 <dd>
+<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>A tensor</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>Its offset</li>
+</ul>
+</dd>
+</dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/data_structure.nim#L31"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/data_structure.nim#L51"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/data_structure.nim#L31" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/data_structure.nim#L51" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="rank"><a name="rank.t,Tensor"></a><pre><span class="Keyword">template</span> <span class="Identifier">rank</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span></pre></dt>
 <dd>
+<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>A tensor</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>Its shape</li>
+</ul>
+</dd>
+<dt></dt>
+<dd><ul class="simple"><li>0 for scalar (unfortunately cannot be stored)</li>
+<li>1 for vector</li>
+<li>2 for matrices</li>
+<li>N for N-dimension array</li>
+</ul>
+</dd>
+</dl>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/data_structure.nim#L32"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/data_structure.nim#L58"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/data_structure.nim#L32" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/data_structure.nim#L58" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="get_data_ptr"><a name="get_data_ptr.t,Tensor[B,T]"></a><pre><span class="Keyword">template</span> <span class="Identifier">get_data_ptr</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">[</span><span class="Identifier">B</span><span class="Other">,</span> <span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">ptr</span> <span class="Identifier">T</span></pre></dt>
 <dd>
-Get a pointer to the start of the data.
+<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>A tensor</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>A pointer to the start of its data</li>
+</ul>
+</dd>
+</dl>
+
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/data_structure.nim#L61"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/data_structure.nim#L95"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/data_structure.nim#L61" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/data_structure.nim#L95" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="bc"><a name="bc.t,Tensor,openArray[int]"></a><pre><span class="Keyword">template</span> <span class="Identifier">bc</span><span class="Other">(</span><span class="Identifier">t</span><span class="Other">:</span> <span class="Identifier">Tensor</span><span class="Other">;</span> <span class="Identifier">shape</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">untyped</span></pre></dt>
 <dd>
-Alias
+Alias for <tt class="docutils literal"><span class="pre">broadcast</span></tt>
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/shapeshifting.nim#L111"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/shapeshifting.nim#L119"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/shapeshifting.nim#L111" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/shapeshifting.nim#L119" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="makeUniversal"><a name="makeUniversal.t,untyped"></a><pre><span class="Keyword">template</span> <span class="Identifier">makeUniversal</span><span class="Other">(</span><span class="Identifier">func_name</span><span class="Other">:</span> <span class="Identifier">untyped</span><span class="Other">)</span></pre></dt>
@@ -3034,28 +3268,28 @@ class="link-seesrc" target="_blank">Source</a>
 <p>The function can be used directly on tensors and will work element-wise.</p>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L38"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L38"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L38" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L38" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="makeUniversalLocal"><a name="makeUniversalLocal.t,untyped"></a><pre><span class="Keyword">template</span> <span class="Identifier">makeUniversalLocal</span><span class="Other">(</span><span class="Identifier">func_name</span><span class="Other">:</span> <span class="Identifier">untyped</span><span class="Other">)</span></pre></dt>
 <dd>
 
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/ufunc.nim#L50"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/ufunc.nim#L52"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/ufunc.nim#L50" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/ufunc.nim#L52" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <dt id="rewriteToTensorReshape"><a name="rewriteToTensorReshape.t,openArray,,varargs[int]"></a><pre><span class="Keyword">template</span> <span class="Identifier">rewriteToTensorReshape</span><span class="Other">{</span><span class="Identifier">reshape</span><span class="Other">(</span><span class="Identifier">toTensor</span><span class="Other">(</span><span class="Identifier">oa</span><span class="Other">,</span> <span class="Identifier">B</span><span class="Other">)</span><span class="Other">,</span> <span class="Identifier">shape</span><span class="Other">)</span>
 <span class="Other">}</span><span class="Other">(</span><span class="Identifier">oa</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">;</span> <span class="Identifier">B</span><span class="Other">:</span> <span class="Keyword">static</span><span class="Other">[</span><span class="Identifier">Backend</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">shape</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">auto</span></pre></dt>
 <dd>
-
+Fuse <tt class="docutils literal"><span class="pre">sequence.toTensor(Backend).reshape(new_shape)</span></tt> into a single operation.
 &nbsp;&nbsp;<a
-href="/tree/master/src/arraymancer/term_rewriting.nim#L35"
+href="https://github.com/mratsim/Arraymancer/blob/master/src/arraymancer/term_rewriting.nim#L35"
 class="link-seesrc" target="_blank">Source</a>
-<a href="/edit/devel/src/arraymancer/term_rewriting.nim#L35" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/mratsim/Arraymancer/edit/master/src/arraymancer/term_rewriting.nim#L35" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -3068,7 +3302,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2017-07-08 13:56:04 UTC</small>
+        <small>Made with Nim. Generated: 2017-07-08 17:38:52 UTC</small>
       </div>
     </div>
   </div>
