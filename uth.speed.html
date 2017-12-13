@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Arraymancer - Under the hood: Speed</title>
+
+  <link href="docutils.css" rel="stylesheet" type="text/css"/>
+  <link href="nav.css" rel="stylesheet" type="text/css"/>
+
+  <link href='http://fonts.googleapis.com/css?family=Raleway:400,600,900' rel='stylesheet' type='text/css'/>
+  <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600' rel='stylesheet' type='text/css'/>
+</head>
+<body>
+<a href="https://github.com/mratsim/arraymancer"><img style="position: fixed; top: 0; right: 0; border: 0; z-index: 10;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+<header>
+  <a class="pagetitle" href="index.html">Arraymancer</a>
+  <span>
+    <a href="#">Technical reference</a>
+    <ul class="monospace">
+      <span>
+        <a href="#">Core tensor API</a>
+        <ul class="monospace">
+          <li><a href="tensor.accessors_macros_read.html">tensor.accessors_macros_read</a></li>
+          <li><a href="tensor.accessors_macros_syntax.html">tensor.accessors_macros_syntax</a></li>
+          <li><a href="tensor.accessors_macros_write.html">tensor.accessors_macros_write</a></li>
+          <li><a href="tensor.accessors.html">tensor.accessors</a></li>
+          <li><a href="tensor.aggregate.html">tensor.aggregate</a></li>
+          <li><a href="tensor.comparison.html">tensor.comparison</a></li>
+          <li><a href="tensor.data_structure.html">tensor.data_structure</a></li>
+          <li><a href="tensor.display.html">tensor.display</a></li>
+          <li><a href="tensor.exporting.html">tensor.exporting</a></li>
+          <li><a href="tensor.filling_data.html">tensor.filling_data</a></li>
+          <li><a href="tensor.higher_order_applymap.html">tensor.higher_order_applymap</a></li>
+          <li><a href="tensor.higher_order_foldreduce.html">tensor.higher_order_foldreduce</a></li>
+          <li><a href="tensor.init_cpu.html">tensor.init_cpu</a></li>
+          <li><a href="tensor.init_copy_cpu.html">tensor.init_copy_cpu</a></li>
+          <li><a href="tensor.lapack.html">tensor.lapack</a></li>
+          <li><a href="tensor.math_functions.html">tensor.math_functions</a></li>
+          <li><a href="tensor.operators_blas_l1.html">tensor.operators_blas_l1</a></li>
+          <li><a href="tensor.operators_blas_l2l3.html">tensor.operators_blas_l2l3</a></li>
+          <li><a href="tensor.operators_broadcasted.html">tensor.operators_broadcasted</a></li>
+          <li><a href="tensor.operators_logical.html">tensor.operators_logical</a></li>
+          <li><a href="tensor.optim_ops_fusion.html">tensor.optim_ops_fusion</a></li>
+          <li><a href="tensor.shapeshifting.html">tensor.shapeshifting</a></li>
+          <li><a href="tensor.syntactic_sugar.html">tensor.syntactic_sugar</a></li>
+          <li><a href="tensor.ufunc.html">tensor.ufunc</a></li>
+        </ul>
+      </span>
+      <span>
+        <a href="#">Autograd</a>
+        <ul class="monospace">
+          <li><a href="ag.ag_accessors.html">Accessors</a></li>
+          <li><a href="ag.ag_data_structure.html">Data structure</a></li>
+          <li><a href="ag.gates_basic.html">Basic operations</a></li>
+          <li><a href="ag.gates_blas.html">Linear algebra operations</a></li>
+          <li><a href="ag.gates_reduce.html">Reduction operations</a></li>
+        </ul>
+      </span>
+      <span>
+        <a href="#">Neural network API</a>
+        <ul class="monospace">
+          <li><a href="nn_activation.relu.html">Activation: Relu (Rectified linear Unit)</a></li>
+          <li><a href="nn_activation.sigmoid.html">Activation: Sigmoid</a></li>
+          <li><a href="nn_layers.conv2D.html">Layers: Convolution</a></li>
+          <li><a href="nn_layers.conv2D.html">Layers: Linear/Dense</a></li>
+          <li><a href="nn_loss.sigmoid_cross_entropy.html">Loss: Sigmoid Cross-Entropy</a></li>
+          <li><a href="nn_optimizers.optimizers.html">Optimizers</a></li>
+        </ul>
+      </span>
+      <span>
+        <a href="#">Neuralnet primitives</a>
+        <ul class="monospace">
+          <li><a href="nnp.nnp_activation.html">Activation</a></li>
+          <li><a href="nnp.nnp_convolution.html">Convolution</a></li>
+          <li><a href="nnp.nnp_linear.html">Linear / Dense layer</a></li>
+          <li><a href="nnp.nnp_sigmoid_cross_entropy.html">Sigmoid Cross-Entropy loss</a></li>
+          <li><a href="nnp.nnp_softmax_cross_entropy.html">Softmax Cross-Entropy loss</a></li>
+        </ul>
+      </span>
+    </ul>
+  </span>
+  <span>
+    <a href="#">Tutorial</a>
+    <ul class="monospace">
+      <li><a href="tuto.first_steps.html">First steps</a></li>
+      <li><a href="tuto.slicing.html">Taking a slice of a tensor</a></li>
+      <li><a href="tuto.linear_algebra.html">Matrix & vectors operations</a></li>
+      <li><a href="tuto.broadcasting.html">Broadcasted operations</a></li>
+      <li><a href="tuto.shapeshifting.html">Transposing, Reshaping, Permuting, Concatenating</a></li>
+      <li><a href="tuto.map_reduce.html">Map & Reduce</a></li>
+      <li><a href="tuto.iterators.html">Basic iterators</a></li>
+    </ul>
+  </span>
+  <span>
+    <a href="#">Spellbook (How-To&apos;s)</a>
+    <ul class="monospace">
+      <li><a href="howto.type_conversion.html">How to convert a Tensor type?</a></li>
+      <li><a href="howto.ufunc.html">How to create a new universal function?</a></li>
+      <li><a href="howto.perceptron.html">How to create a multilayer perceptron?</a></li>
+    </ul>
+  </span>
+  <span>
+    <a href="#">Under the hood</a>
+    <ul class="monospace">
+      <li><a href="uth.speed.html">How Arraymancer achieves its speed?</a></li>
+      <li><a href="uth.copy_semantics.html">Why does `=` share data by default aka reference semantics?</a></li>
+    </ul>
+  </span>
+</header>
+<article id="documentId">
+  <div class="container">
+    <h1 class="title">Under the hood: Speed</h1>
+    
+<h1 id="parallelism">Parallelism</h1><p>Most operations in Arraymancer are parallelized through OpenMP including linear algebra functions, universal functions, <tt class="docutils literal"><span class="pre">map</span></tt>, <tt class="docutils literal"><span class="pre">reduce</span></tt> and <tt class="docutils literal"><span class="pre">fold</span></tt> based operations.</p>
+
+<h1 id="parallel-loop-fusion-yolo-you-only-loop-once">Parallel loop fusion - YOLO (You Only Loop Once)</h1><p>Arraymancer provides several constructs for the YOLO™ paradigm (You Only Loop Once).</p>
+<p>A naïve logistic sigmoid implementation in Numpy would be:</p>
+<pre class="listing">
+import math
+
+def sigmoid(x):
+  return 1 / (1 + math.exp(-x))</pre><p>With Numpy broadcasting, all those operations would be done on whole tensors using Numpy C implementation, pretty efficient?</p>
+<p>Actually no, this would create lots of temporary and loops across the data: - <tt class="docutils literal"><span class="pre">temp1 = -x</span></tt> - <tt class="docutils literal"><span class="pre">temp2 = math.exp(temp1)</span></tt> - <tt class="docutils literal"><span class="pre">temp3 = 1 + temp2</span></tt> - <tt class="docutils literal"><span class="pre">temp4 = 1 / temp3</span></tt></p>
+<p>So you suddenly get a o(n^4) algorithm.</p>
+<p>Arraymancer can do the same using the explicit broadcast operator <tt class="docutils literal"><span class="pre">./</span></tt> and <tt class="docutils literal"><span class="pre">.+</span></tt>. (To avoid name conflict we change the logistic sigmoid name)</p>
+<pre class="listing"><span class="Keyword">import</span> <span class="Identifier">arraymancer</span>
+
+<span class="Identifier">def</span> <span class="Identifier">customSigmoid</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">:</span> <span class="Identifier">SomeReal</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Identifier">Tensor</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">Tensor</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span> <span class="Operator">=</span>
+  <span class="Identifier">result</span> <span class="Operator">=</span> <span class="DecNumber">1</span> <span class="Operator">./</span> <span class="Punctuation">(</span><span class="DecNumber">1</span> <span class="Operator">.+</span> <span class="Identifier">exp</span><span class="Punctuation">(</span><span class="Operator">-</span><span class="Identifier">t</span><span class="Punctuation">)</span><span class="Punctuation">)</span></pre><p>Well, unfortunately, the only thing we gain here is parallelism but we still have 4 loops over the data implicitly. Another way would be to use the loop fusion template <tt class="docutils literal"><span class="pre">map_inline</span></tt>:</p>
+<pre class="listing"><span class="Keyword">import</span> <span class="Identifier">arraymancer</span>
+
+<span class="Identifier">def</span> <span class="Identifier">customSigmoid2</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">:</span> <span class="Identifier">SomeReal</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">:</span> <span class="Identifier">Tensor</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">)</span><span class="Punctuation">:</span> <span class="Identifier">Tensor</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span> <span class="Operator">=</span>
+  <span class="Identifier">result</span> <span class="Operator">=</span> <span class="Identifier">map_inline</span><span class="Punctuation">(</span><span class="Identifier">t</span><span class="Punctuation">)</span><span class="Punctuation">:</span>
+    <span class="DecNumber">1</span> <span class="Operator">/</span> <span class="Punctuation">(</span><span class="DecNumber">1</span> <span class="Operator">+</span> <span class="Identifier">exp</span><span class="Punctuation">(</span><span class="Operator">-</span><span class="Identifier">x</span><span class="Punctuation">)</span><span class="Punctuation">)</span></pre><p>Now in a single loop over <tt class="docutils literal"><span class="pre">t</span></tt>, Arraymancer will do <tt class="docutils literal"><span class="pre">1 / (1 + exp(-x))</span></tt> for each x found. <tt class="docutils literal"><span class="pre">x</span></tt> is a shorthand for the elements of the first tensor argument.</p>
+<p>Here is another example with 3 tensors and element-wise fused multiply-add <tt class="docutils literal"><span class="pre">C += A .* B</span></tt>:</p>
+<pre class="listing"><span class="Keyword">import</span> <span class="Identifier">arraymancer</span>
+
+<span class="Identifier">def</span> <span class="Identifier">fusedMultiplyAdd</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">:</span> <span class="Identifier">SomeNumber</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Identifier">c</span><span class="Punctuation">:</span> <span class="Keyword">var</span> <span class="Identifier">Tensor</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">,</span> <span class="Identifier">a</span><span class="Punctuation">,</span> <span class="Identifier">b</span><span class="Punctuation">:</span> <span class="Identifier">Tensor</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">)</span> <span class="Operator">=</span>
+  <span class="Comment">## Implements C += A .* B, .* is the element-wise multiply</span>
+  <span class="Identifier">apply3_inline</span><span class="Punctuation">(</span><span class="Identifier">c</span><span class="Punctuation">,</span> <span class="Identifier">a</span><span class="Punctuation">,</span> <span class="Identifier">b</span><span class="Punctuation">)</span><span class="Punctuation">:</span>
+    <span class="Identifier">x</span> <span class="Operator">+=</span> <span class="Identifier">y</span> <span class="Operator">*</span> <span class="Identifier">z</span></pre><p>Since the tensor were given in order (c, a, b): - x corresponds to elements of c - y to a - z to b</p>
+<p>Today Arraymancer offers <tt class="docutils literal"><span class="pre">map_inline</span></tt>, <tt class="docutils literal"><span class="pre">map2_inline</span></tt>, <tt class="docutils literal"><span class="pre">apply_inline</span></tt>, <tt class="docutils literal"><span class="pre">apply2_inline</span></tt> and <tt class="docutils literal"><span class="pre">apply3_inline</span></tt>.</p>
+<p>Those are also parallelized using OpenMP. In the future, this will be generalized to N inputs.</p>
+<p>Similarly, <tt class="docutils literal"><span class="pre">reduce_inline</span></tt> and <tt class="docutils literal"><span class="pre">fold_inline</span></tt> are offered for parallel, custom, fused reductions operations.</p>
+
+<h1 id="memory-allocation">Memory allocation</h1><p>For most operations in machine learning, memory and cache is the bottleneck, for example taking the log of a Tensor can use at most 20% of your theoretical max CPU speed (in GFLOPS) while matrix multiplication can use 70%-90%+ for the best implementations (MKL, OpenBLAS).</p>
+<p>In the log case, the processor gives a result faster than it can load data into its cache. In the matrix multiplication case, each element of a matrix can be reused several times before loading data again.</p>
+<p>Arraymancer strives hard to limit memory allocation with the <tt class="docutils literal"><span class="pre">inline</span></tt> version of <tt class="docutils literal"><span class="pre">map</span></tt>, <tt class="docutils literal"><span class="pre">apply</span></tt>, <tt class="docutils literal"><span class="pre">reduce</span></tt>, <tt class="docutils literal"><span class="pre">fold</span></tt> (<tt class="docutils literal"><span class="pre">map_inline</span></tt>, <tt class="docutils literal"><span class="pre">apply_inline</span></tt>, <tt class="docutils literal"><span class="pre">reduce_inline</span></tt>, <tt class="docutils literal"><span class="pre">fold_inline</span></tt>) mentioned above that avoids intermediate results.</p>
+
+<h1 id="micro-benchmark-int64-matrix-multiplication">Micro benchmark: Int64 matrix multiplication</h1><p>Integers seem to be the abandoned children of ndarrays and tensors libraries. Everyone is optimising the hell of floating points. Not so with Arraymancer:</p>
+<pre>
+Archlinux, E3-1230v5 (Skylake quad-core 3.4 GHz, turbo 3.8)
+Input 1500x1500 random large int64 matrix
+Arraymancer 0.2.90 (master branch 2017-10-10)</pre>
+<table border="1" class="docutils"><tr><th>Language</th><th>Speed</th><th>Memory</th></tr>
+<tr><td>Nim 0.17.3 (devel) + OpenMP</td><td><strong>0.36s</strong></td><td>55.5 MB</td></tr>
+<tr><td>Julia v0.6.0</td><td>3.11s</td><td>207.6 MB</td></tr>
+<tr><td>Python 3.6.2 + Numpy 1.12 compiled from source</td><td>8.03s</td><td>58.9 MB</td></tr>
+</table><pre>
+MacOS + i5-5257U (Broadwell dual-core mobile 2.7GHz, turbo 3.1)
+Input 1500x1500 random large int64 matrix
+Arraymancer 0.2.90 (master branch 2017-10-31)
+
+no OpenMP compilation: nim c -d:native -d:release --out:bin/integer_matmul --nimcache:./nimcache benchmarks/integer_matmul.nim
+with OpenMP: nim c -d:openmp --cc:gcc --gcc.exe:&quot;/usr/local/bin/gcc-6&quot; --gcc.linkerexe:&quot;/usr/local/bin/gcc-6&quot;  -d:native -d:release --out:bin/integer_matmul --nimcache:./nimcache benchmarks/integer_matmul.nim</pre>
+<table border="1" class="docutils"><tr><th>Language</th><th>Speed</th><th>Memory</th></tr>
+<tr><td>Nim 0.18.0 (devel) - GCC 6 + OpenMP</td><td><strong>0.95s</strong></td><td>71.9 MB</td></tr>
+<tr><td>Nim 0.18.0 (devel) - Apple Clang 9 - no OpenMP</td><td>1.73s</td><td>71.7 MB</td></tr>
+<tr><td>Julia v0.6.0</td><td>4.49s</td><td>185.2 MB</td></tr>
+<tr><td>Python 3.5.2 + Numpy 1.12</td><td>9.49s</td><td>55.8 MB</td></tr>
+</table><p>Benchmark setup is in the <tt class="docutils literal"><span class="pre">./benchmarks</span></tt> folder and similar to (stolen from) <a class="reference external" href="https://github.com/kostya/benchmarks#matmul">Kostya’s</a>. Note: Arraymancer float matmul is as fast as <tt class="docutils literal"><span class="pre">Julia Native Thread</span></tt>.</p>
+
+<h1 id="logistic-regression">Logistic regression</h1><p>On the <a class="reference external" href="https://github.com/edubart/arraymancer-demos">demo benchmark</a>, Arraymancer is faster than Torch in v0.2.90.</p>
+<p>CPU</p>
+<table border="1" class="docutils"><tr><th>Framework</th><th>Backend</th><th>Forward+Backward Pass Time</th></tr>
+<tr><td>Arraymancer v0.3.0</td><td>OpenMP + MKL</td><td><strong>0.458ms</strong></td></tr>
+<tr><td>Torch7</td><td>MKL</td><td>0.686ms</td></tr>
+<tr><td>Numpy</td><td>MKL</td><td>0.723ms</td></tr>
+</table><p>GPU</p>
+<table border="1" class="docutils"><tr><th>Framework</th><th>Backend</th><th>Forward+Backward Pass Time</th></tr>
+<tr><td>Arraymancer v0.3.0</td><td>Cuda</td><td>WIP</td></tr>
+<tr><td>Torch7</td><td>Cuda</td><td>0.286ms</td></tr>
+</table>
+<h1 id="dnn-3-hidden-layers">DNN - 3 hidden layers</h1><p>CPU</p>
+<table border="1" class="docutils"><tr><th>Framework</th><th>Backend</th><th>Forward+Backward Pass Time</th></tr>
+<tr><td>Arraymancer v0.3.0</td><td>OpenMP + MKL</td><td><strong>2.907ms</strong></td></tr>
+<tr><td>PyTorch</td><td>MKL</td><td>6.797ms</td></tr>
+</table><p>GPU</p>
+<table border="1" class="docutils"><tr><th>Framework</th><th>Backend</th><th>Forward+Backward Pass Time</th></tr>
+<tr><td>Arraymancer v0.3.0</td><td>Cuda</td><td>WIP</td></tr>
+<tr><td>PyTorch</td><td>Cuda</td><td>4.765ms</td></tr>
+</table><pre>
+Intel(R) Core(TM) i7-3770K CPU @ 3.50GHz, gcc 7.2.0, MKL 2017.17.0.4.4, OpenBLAS 0.2.20, Cuda 8.0.61, Geforce GTX 1080 Ti, Nim 0.18.0</pre>
+<p>In the future, Arraymancer will leverage Nim compiler to automatically fuse operations like <tt class="docutils literal"><span class="pre">alpha A*B + beta C</span></tt> or a combination of element-wise operations. This is already done to fuse <tt class="docutils literal"><span class="pre">toTensor</span></tt> and <tt class="docutils literal"><span class="pre">reshape</span></tt>.</p>
+
+
+
+    <div class="row">
+      <div class="twelve-columns footer">
+        <span class="nim-sprite"></span>
+        <br/>
+        <small>Made with Nim. Generated: 2017-12-13 22:31:04 UTC</small>
+      </div>
+    </div>
+  </div>
+</article>
+</body>
+</html>

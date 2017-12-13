@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Arraymancer - Module accessors_macros_syntax</title>
+
+  <link href="docutils.css" rel="stylesheet" type="text/css"/>
+  <link href="nav.css" rel="stylesheet" type="text/css"/>
+
+  <link href='http://fonts.googleapis.com/css?family=Raleway:400,600,900' rel='stylesheet' type='text/css'/>
+  <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600' rel='stylesheet' type='text/css'/>
+</head>
+<body>
+<a href="https://github.com/mratsim/arraymancer"><img style="position: fixed; top: 0; right: 0; border: 0; z-index: 10;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+<header>
+  <a class="pagetitle" href="index.html">Arraymancer</a>
+  <span>
+    <a href="#">Technical reference</a>
+    <ul class="monospace">
+      <span>
+        <a href="#">Core tensor API</a>
+        <ul class="monospace">
+          <li><a href="tensor.accessors_macros_read.html">tensor.accessors_macros_read</a></li>
+          <li><a href="tensor.accessors_macros_syntax.html">tensor.accessors_macros_syntax</a></li>
+          <li><a href="tensor.accessors_macros_write.html">tensor.accessors_macros_write</a></li>
+          <li><a href="tensor.accessors.html">tensor.accessors</a></li>
+          <li><a href="tensor.aggregate.html">tensor.aggregate</a></li>
+          <li><a href="tensor.comparison.html">tensor.comparison</a></li>
+          <li><a href="tensor.data_structure.html">tensor.data_structure</a></li>
+          <li><a href="tensor.display.html">tensor.display</a></li>
+          <li><a href="tensor.exporting.html">tensor.exporting</a></li>
+          <li><a href="tensor.filling_data.html">tensor.filling_data</a></li>
+          <li><a href="tensor.higher_order_applymap.html">tensor.higher_order_applymap</a></li>
+          <li><a href="tensor.higher_order_foldreduce.html">tensor.higher_order_foldreduce</a></li>
+          <li><a href="tensor.init_cpu.html">tensor.init_cpu</a></li>
+          <li><a href="tensor.init_copy_cpu.html">tensor.init_copy_cpu</a></li>
+          <li><a href="tensor.lapack.html">tensor.lapack</a></li>
+          <li><a href="tensor.math_functions.html">tensor.math_functions</a></li>
+          <li><a href="tensor.operators_blas_l1.html">tensor.operators_blas_l1</a></li>
+          <li><a href="tensor.operators_blas_l2l3.html">tensor.operators_blas_l2l3</a></li>
+          <li><a href="tensor.operators_broadcasted.html">tensor.operators_broadcasted</a></li>
+          <li><a href="tensor.operators_logical.html">tensor.operators_logical</a></li>
+          <li><a href="tensor.optim_ops_fusion.html">tensor.optim_ops_fusion</a></li>
+          <li><a href="tensor.shapeshifting.html">tensor.shapeshifting</a></li>
+          <li><a href="tensor.syntactic_sugar.html">tensor.syntactic_sugar</a></li>
+          <li><a href="tensor.ufunc.html">tensor.ufunc</a></li>
+        </ul>
+      </span>
+      <span>
+        <a href="#">Autograd</a>
+        <ul class="monospace">
+          <li><a href="ag.ag_accessors.html">Accessors</a></li>
+          <li><a href="ag.ag_data_structure.html">Data structure</a></li>
+          <li><a href="ag.gates_basic.html">Basic operations</a></li>
+          <li><a href="ag.gates_blas.html">Linear algebra operations</a></li>
+          <li><a href="ag.gates_reduce.html">Reduction operations</a></li>
+        </ul>
+      </span>
+      <span>
+        <a href="#">Neural network API</a>
+        <ul class="monospace">
+          <li><a href="nn_activation.relu.html">Activation: Relu (Rectified linear Unit)</a></li>
+          <li><a href="nn_activation.sigmoid.html">Activation: Sigmoid</a></li>
+          <li><a href="nn_layers.conv2D.html">Layers: Convolution</a></li>
+          <li><a href="nn_layers.conv2D.html">Layers: Linear/Dense</a></li>
+          <li><a href="nn_loss.sigmoid_cross_entropy.html">Loss: Sigmoid Cross-Entropy</a></li>
+          <li><a href="nn_optimizers.optimizers.html">Optimizers</a></li>
+        </ul>
+      </span>
+      <span>
+        <a href="#">Neuralnet primitives</a>
+        <ul class="monospace">
+          <li><a href="nnp.nnp_activation.html">Activation</a></li>
+          <li><a href="nnp.nnp_convolution.html">Convolution</a></li>
+          <li><a href="nnp.nnp_linear.html">Linear / Dense layer</a></li>
+          <li><a href="nnp.nnp_sigmoid_cross_entropy.html">Sigmoid Cross-Entropy loss</a></li>
+          <li><a href="nnp.nnp_softmax_cross_entropy.html">Softmax Cross-Entropy loss</a></li>
+        </ul>
+      </span>
+    </ul>
+  </span>
+  <span>
+    <a href="#">Tutorial</a>
+    <ul class="monospace">
+      <li><a href="tuto.first_steps.html">First steps</a></li>
+      <li><a href="tuto.slicing.html">Taking a slice of a tensor</a></li>
+      <li><a href="tuto.linear_algebra.html">Matrix & vectors operations</a></li>
+      <li><a href="tuto.broadcasting.html">Broadcasted operations</a></li>
+      <li><a href="tuto.shapeshifting.html">Transposing, Reshaping, Permuting, Concatenating</a></li>
+      <li><a href="tuto.map_reduce.html">Map & Reduce</a></li>
+      <li><a href="tuto.iterators.html">Basic iterators</a></li>
+    </ul>
+  </span>
+  <span>
+    <a href="#">Spellbook (How-To&apos;s)</a>
+    <ul class="monospace">
+      <li><a href="howto.type_conversion.html">How to convert a Tensor type?</a></li>
+      <li><a href="howto.ufunc.html">How to create a new universal function?</a></li>
+      <li><a href="howto.perceptron.html">How to create a multilayer perceptron?</a></li>
+    </ul>
+  </span>
+  <span>
+    <a href="#">Under the hood</a>
+    <ul class="monospace">
+      <li><a href="uth.speed.html">How Arraymancer achieves its speed?</a></li>
+      <li><a href="uth.copy_semantics.html">Why does `=` share data by default aka reference semantics?</a></li>
+    </ul>
+  </span>
+</header>
+<article id="documentId">
+  <div class="container">
+    <h1 class="title">Module accessors_macros_syntax</h1>
+    <div class="row">
+  <div class="three columns">
+  <div id="global-links">
+    <ul class="simple">
+    </ul>
+  </div>
+  <div id="searchInput">
+    Search: <input type="text" id="searchInput"
+      onkeyup="search()" />
+  </div>
+  <div>
+    Group by:
+    <select onchange="groupBy(this.value)">
+      <option value="section">Section</option>
+      <option value="type">Type</option>
+    </select>
+  </div>
+  <ul class="simple simple-toc" id="toc-list">
+<li>
+  <a class="reference reference-toplevel" href="#6" id="56">Imports</a>
+  <ul class="simple simple-toc-section">
+    
+  </ul>
+</li>
+<li>
+  <a class="reference reference-toplevel" href="#7" id="57">Types</a>
+  <ul class="simple simple-toc-section">
+      <li><a class="reference" href="#SteppedSlice"
+    title="SteppedSlice = object
+  a*, b*: int
+  step*: int
+  a_from_end*: bool
+  b_from_end*: bool"><wbr />Stepped<wbr />Slice<span class="attachedType" style="visibility:hidden"></span></a></li>
+  <li><a class="reference" href="#Step"
+    title="Step = object
+  b: int
+  step: int"><wbr />Step<span class="attachedType" style="visibility:hidden"></span></a></li>
+  <li><a class="reference" href="#Ellipsis"
+    title="Ellipsis = object"><wbr />Ellipsis<span class="attachedType" style="visibility:hidden"></span></a></li>
+  <li><a class="reference" href="#ArrayOfSlices"
+    title="ArrayOfSlices = DynamicStackArray[SteppedSlice]"><wbr />Array<wbr />Of<wbr />Slices<span class="attachedType" style="visibility:hidden"></span></a></li>
+
+  </ul>
+</li>
+<li>
+  <a class="reference reference-toplevel" href="#10" id="60">Consts</a>
+  <ul class="simple simple-toc-section">
+      <li><a class="reference" href="#_"
+    title="_ = (a: 0, b: 1, step: 1, a_from_end: false, b_from_end: true)"><wbr />`_<wbr />`<span class="attachedType" style="visibility:hidden"></span></a></li>
+  <li><a class="reference" href="#..."
+    title="... = ()"><wbr />`...`<span class="attachedType" style="visibility:hidden"></span></a></li>
+
+  </ul>
+</li>
+<li>
+  <a class="reference reference-toplevel" href="#12" id="62">Procs</a>
+  <ul class="simple simple-toc-section">
+      <li><a class="reference" href="#toArrayOfSlices,varargs[SteppedSlice]"
+    title="toArrayOfSlices(s: varargs[SteppedSlice]): ArrayOfSlices"><wbr />to<wbr />Array<wbr />Of<wbr />Slices<span class="attachedType" style="visibility:hidden">SteppedSlice</span></a></li>
+  <li><a class="reference" href="#initSpanSlices,int"
+    title="initSpanSlices(len: int): ArrayOfSlices"><wbr />init<wbr />Span<wbr />Slices<span class="attachedType" style="visibility:hidden">ArrayOfSlices</span></a></li>
+  <li><a class="reference" href="#|,Slice[int],int"
+    title="`|`(s: Slice[int]; step: int): SteppedSlice"><wbr />`|`<span class="attachedType" style="visibility:hidden">SteppedSlice</span></a></li>
+  <li><a class="reference" href="#|,int,int"
+    title="`|`(b, step: int): Step"><wbr />`|`<span class="attachedType" style="visibility:hidden">Step</span></a></li>
+  <li><a class="reference" href="#|,SteppedSlice,int"
+    title="`|`(ss: SteppedSlice; step: int): SteppedSlice"><wbr />`|`<span class="attachedType" style="visibility:hidden">SteppedSlice</span></a></li>
+  <li><a class="reference" href="#|+,Slice[int],int"
+    title="`|+`(s: Slice[int]; step: int): SteppedSlice"><wbr />`|+`<span class="attachedType" style="visibility:hidden">SteppedSlice</span></a></li>
+  <li><a class="reference" href="#|+,int,int"
+    title="`|+`(b, step: int): Step"><wbr />`|+`<span class="attachedType" style="visibility:hidden">Step</span></a></li>
+  <li><a class="reference" href="#|+,SteppedSlice,int"
+    title="`|+`(ss: SteppedSlice; step: int): SteppedSlice"><wbr />`|+`<span class="attachedType" style="visibility:hidden">SteppedSlice</span></a></li>
+  <li><a class="reference" href="#|-,Slice[int],int"
+    title="`|-`(s: Slice[int]; step: int): SteppedSlice"><wbr />`|-`<span class="attachedType" style="visibility:hidden">SteppedSlice</span></a></li>
+  <li><a class="reference" href="#|-,int,int"
+    title="`|-`(b, step: int): Step"><wbr />`|-`<span class="attachedType" style="visibility:hidden">Step</span></a></li>
+  <li><a class="reference" href="#|-,SteppedSlice,int"
+    title="`|-`(ss: SteppedSlice; step: int): SteppedSlice"><wbr />`|-`<span class="attachedType" style="visibility:hidden">SteppedSlice</span></a></li>
+  <li><a class="reference" href="#..,int,Step"
+    title="`..`(a: int; s: Step): SteppedSlice"><wbr />`..`<span class="attachedType" style="visibility:hidden">SteppedSlice</span></a></li>
+  <li><a class="reference" href="#..<,int,Step"
+    title="`..&lt;`(a: int; s: Step): SteppedSlice"><wbr />`..&lt;`<span class="attachedType" style="visibility:hidden">SteppedSlice</span></a></li>
+  <li><a class="reference" href="#..^,int,Step"
+    title="`..^`(a: int; s: Step): SteppedSlice"><wbr />`..^`<span class="attachedType" style="visibility:hidden">SteppedSlice</span></a></li>
+  <li><a class="reference" href="#^,SteppedSlice"
+    title="`^`(s: SteppedSlice): SteppedSlice"><wbr />`^`<span class="attachedType" style="visibility:hidden">SteppedSlice</span></a></li>
+  <li><a class="reference" href="#^,Slice"
+    title="`^`(s: Slice): SteppedSlice"><wbr />`^`<span class="attachedType" style="visibility:hidden">SteppedSlice</span></a></li>
+
+  </ul>
+</li>
+
+</ul>
+
+  </div>
+  <div class="nine columns" id="content">
+  <div id="tocRoot"></div>
+  <p class="module-desc"></p>
+  <div class="section" id="6">
+<h1><a class="toc-backref" href="#6">Imports</a></h1>
+<dl class="item">
+<a class="reference external" href="../private/nested_containers.html">../private/nested_containers</a>, <a class="reference external" href="../private/functional.html">../private/functional</a>, <a class="reference external" href="./backend/metadataArray.html">./backend/metadataArray</a>, <a class="reference external" href="./private/p_checks.html">./private/p_checks</a>, <a class="reference external" href="./data_structure.html">./data_structure</a>
+</dl></div>
+<div class="section" id="7">
+<h1><a class="toc-backref" href="#7">Types</a></h1>
+<dl class="item">
+<dt id="SteppedSlice"><a name="SteppedSlice"></a><pre><span class="Identifier">SteppedSlice</span> <span class="Other">=</span> <span class="Keyword">object</span>
+  <span class="Identifier">a</span><span class="Operator">*</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">int</span>
+  <span class="Identifier">step</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">int</span>
+  <span class="Identifier">a_from_end</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">bool</span>
+  <span class="Identifier">b_from_end</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">bool</span>
+</pre></dt>
+<dd>
+<dl class="docutils"><dt>Internal: A slice object related to a tensor single dimension:</dt>
+<dd><ul class="simple"><li>a, b: Respectively the beginning and the end of the range of the dimension</li>
+<li>step: The stepping of the slice (can be negative)</li>
+<li>a/b_from_end: Indicates if a/b should be counted from 0 or from the end of the tensor relevant dimension.</li>
+</ul>
+</dd>
+</dl>
+<p>Slicing syntax like a[2, 1..&lt;5, _] will be converted at compile-time to SteppedSlices</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L59"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L59" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="Step"><a name="Step"></a><pre><span class="Identifier">Step</span> <span class="Other">=</span> <span class="Keyword">object</span>
+  <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">int</span>
+  <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span>
+</pre></dt>
+<dd>
+<p>Internal: Workaround to build <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt> without using parenthesis.</p>
+<p>Expected syntax is <tt class="docutils literal"><span class="pre">tensor[0..10|1]</span></tt>.</p>
+<p>Due to operator precedence of <tt class="docutils literal"><span class="pre">|</span></tt> over <tt class="docutils literal"><span class="pre">..</span></tt> [0..10|1] is interpreted as [0..(10|1)]</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L70"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L70" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="Ellipsis"><a name="Ellipsis"></a><pre><span class="Identifier">Ellipsis</span> <span class="Other">=</span> <span class="Keyword">object</span></pre></dt>
+<dd>
+Dummy type for ellipsis i.e. &quot;Don't slice the rest of dimensions&quot;
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L83"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L83" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="ArrayOfSlices"><a name="ArrayOfSlices"></a><pre><span class="Identifier">ArrayOfSlices</span> <span class="Other">=</span> <span class="Identifier">DynamicStackArray</span><span class="Other">[</span><span class="Identifier">SteppedSlice</span><span class="Other">]</span></pre></dt>
+<dd>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L90"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L90" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+
+</dl></div>
+<div class="section" id="10">
+<h1><a class="toc-backref" href="#10">Consts</a></h1>
+<dl class="item">
+<dt id="_"><a name="_"></a><pre><span class="Operator">_</span> <span class="Other">=</span> <span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="DecNumber">0</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="DecNumber">1</span><span class="Other">,</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="DecNumber">1</span><span class="Other">,</span> <span class="Identifier">a_from_end</span><span class="Other">:</span> <span class="DecNumber">false</span><span class="Other">,</span> <span class="Identifier">b_from_end</span><span class="Other">:</span> <span class="DecNumber">true</span><span class="Other">)</span></pre></dt>
+<dd>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L81"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L81" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="..."><a name="..."></a><pre><span class="Operator">...</span> <span class="Other">=</span> <span class="Other">(</span><span class="Other">)</span></pre></dt>
+<dd>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L85"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L85" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+
+</dl></div>
+<div class="section" id="12">
+<h1><a class="toc-backref" href="#12">Procs</a></h1>
+<dl class="item">
+<dt id="toArrayOfSlices"><a name="toArrayOfSlices,varargs[SteppedSlice]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">toArrayOfSlices</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">SteppedSlice</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">ArrayOfSlices</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L92"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L92" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="initSpanSlices"><a name="initSpanSlices,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">initSpanSlices</span><span class="Other">(</span><span class="Identifier">len</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">ArrayOfSlices</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L100"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L100" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="|"><a name="|,Slice[int],int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|`</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+Internal: A <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt> constructor<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>a slice</li>
+<li>a step</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt></li>
+</ul>
+</dd>
+</dl>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L111"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L111" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="|"><a name="|,int,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|`</span><span class="Other">(</span><span class="Identifier">b</span><span class="Other">,</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Step</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+<p>Internal: A <tt class="docutils literal"><span class="pre">Step</span></tt> constructor</p>
+<p><tt class="docutils literal"><span class="pre">Step</span></tt> is a workaround due to operator precedence.</p>
+<p>[0..10|1] is interpreted as [0..(10|1)]</p>
+<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>the end of a slice range</li>
+<li>a step</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">Step</span></tt></li>
+</ul>
+</dd>
+</dl>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L120"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L120" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="|"><a name="|,SteppedSlice,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|`</span><span class="Other">(</span><span class="Identifier">ss</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span><span class="Other">;</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+Internal: Modifies the step of a <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt><dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">SteppedSLice</span></tt></li>
+<li>the new stepping</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">SteppedSLice</span></tt></li>
+</ul>
+</dd>
+</dl>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L133"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L133" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="|+"><a name="|+,Slice[int],int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|+`</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+Internal: Alias for <tt class="docutils literal"><span class="pre">|</span></tt>
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L143"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L143" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="|+"><a name="|+,int,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|+`</span><span class="Other">(</span><span class="Identifier">b</span><span class="Other">,</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Step</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+Internal: Alias for <tt class="docutils literal"><span class="pre">|</span></tt>
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L147"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L147" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="|+"><a name="|+,SteppedSlice,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|+`</span><span class="Other">(</span><span class="Identifier">ss</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span><span class="Other">;</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+Internal: Alias for <tt class="docutils literal"><span class="pre">|</span></tt>
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L151"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L151" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="|-"><a name="|-,Slice[int],int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|-`</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+<p>Internal: A <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt> constructor</p>
+<p>Workaround to tensor[slice|-1] being interpreted as [slice <cite>|-</cite> 1]</p>
+<p>Properly create <tt class="docutils literal"><span class="pre">SteppedSLice</span></tt> with negative stepping</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L155"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L155" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="|-"><a name="|-,int,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|-`</span><span class="Other">(</span><span class="Identifier">b</span><span class="Other">,</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Step</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+<p>Internal: A <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt> constructor</p>
+<p>Workaround to tensor[0..10|-1] being intepreted as [0 .. (10 <cite>|-</cite> 1)]</p>
+<p>Properly create <tt class="docutils literal"><span class="pre">SteppedSLice</span></tt> with negative stepping</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L163"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L163" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="|-"><a name="|-,SteppedSlice,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`|-`</span><span class="Other">(</span><span class="Identifier">ss</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span><span class="Other">;</span> <span class="Identifier">step</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+<p>Internal: Modifies the step of a <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt></p>
+<p>Workaround to tensor[slice|-1] being interpreted as [slice <cite>|-</cite> 1]</p>
+<p>Properly create <tt class="docutils literal"><span class="pre">SteppedSLice</span></tt> with negative stepping</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L171"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L171" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id=".."><a name="..,int,Step"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`..`</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Step</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+Internal: Build a SteppedSlice from [a .. (b|step)] (workaround to operator precedence)<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>the beginning of the slice range</li>
+<li>a <tt class="docutils literal"><span class="pre">Step</span></tt> workaround object</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt>, end of range will be inclusive</li>
+</ul>
+</dd>
+</dl>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L180"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L180" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="..<"><a name="..<,int,Step"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`..&lt;`</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Step</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+Internal: Build a SteppedSlice from [a ..&lt; (b|step)] (workaround to operator precedence)<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>the beginning of the slice range</li>
+<li>a <tt class="docutils literal"><span class="pre">Step</span></tt> workaround object</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt>, end of range will be exclusive.</li>
+</ul>
+</dd>
+</dl>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L189"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L189" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="..^"><a name="..^,int,Step"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`..^`</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Step</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+Internal: Build a SteppedSlice from [a ..^ (b|step)] (workaround to operator precedence and ..^b not being interpreted as .. ^b)<dl class="docutils"><dt>Input:</dt>
+<dd><ul class="simple"><li>the beginning of the slice range</li>
+<li>a <tt class="docutils literal"><span class="pre">Step</span></tt> workaround object</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="simple"><li>a <tt class="docutils literal"><span class="pre">SteppedSlice</span></tt>, end of range will start at &quot;b&quot; away from the end</li>
+</ul>
+</dd>
+</dl>
+
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L198"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L198" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="^"><a name="^,SteppedSlice"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`^`</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+Internal: Prefix to a to indicate starting the slice at &quot;a&quot; away from the end Note: This does not automatically inverse stepping, what if we want ^5..^1
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L207"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L207" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<dt id="^"><a name="^,Slice"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`^`</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">SteppedSlice</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">noSideEffect</span><span class="Other">,</span> <span class="Identifier">inline</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+Internal: Prefix to a to indicate starting the slice at &quot;a&quot; away from the end Note: This does not automatically inverse stepping, what if we want ^5..^1
+&nbsp;&nbsp;<a
+href="https://github.com/mratsim/arraymancer/tree/master/src/tensor/accessors_macros_syntax.nim#L213"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/mratsim/arraymancer/edit/master/src/tensor/accessors_macros_syntax.nim#L213" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+
+</dl></div>
+
+  </div>
+</div>
+
+    <div class="row">
+      <div class="twelve-columns footer">
+        <span class="nim-sprite"></span>
+        <br/>
+        <small>Made with Nim. Generated: 2017-12-13 22:30:37 UTC</small>
+      </div>
+    </div>
+  </div>
+</article>
+</body>
+</html>
