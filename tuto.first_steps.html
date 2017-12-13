@@ -202,8 +202,9 @@
 <span class="Comment">#  |      1       2       3       4 |     13      14      15      16|</span>
 <span class="Comment">#  |      5       6       7       8 |     17      999     19      20|</span>
 <span class="Comment">#  |      9       10      11      12 |    21      22      23      24|</span></pre>
-<h1 id="copying">Copying</h1><p>Tensor copy is deep by default (all the data is copied). In the majority of cases Nim compiler will detect and avoid useless copies.</p>
-<p><tt class="docutils literal"><span class="pre">unsafeView</span></tt> can be used on a Tensor to enforce shallow copying (data is shared between the 2 variables). Most shape manipulation proc also have an <tt class="docutils literal"><span class="pre">unsafe</span></tt> version.</p>
+<h1 id="copying">Copying</h1><p>Warning ⚠: When you do the following, both tensors <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> will share data. Full copy must be explicitly requested via the <tt class="docutils literal"><span class="pre">clone</span></tt> function.</p>
+<pre class="listing"><span class="Keyword">let</span> <span class="Identifier">a</span> <span class="Operator">=</span> <span class="Identifier">toSeq</span><span class="Punctuation">(</span><span class="FloatNumber">1.</span><span class="Operator">.</span><span class="DecNumber">24</span><span class="Punctuation">)</span><span class="Operator">.</span><span class="Identifier">toTensor</span><span class="Punctuation">(</span><span class="Punctuation">)</span><span class="Operator">.</span><span class="Identifier">reshape</span><span class="Punctuation">(</span><span class="DecNumber">2</span><span class="Punctuation">,</span><span class="DecNumber">3</span><span class="Punctuation">,</span><span class="DecNumber">4</span><span class="Punctuation">)</span>
+<span class="Keyword">var</span> <span class="Identifier">b</span> <span class="Operator">=</span> <span class="Identifier">a</span></pre><p>Here modifying <tt class="docutils literal"><span class="pre">b</span></tt> WILL modify <tt class="docutils literal"><span class="pre">a</span></tt>. This behaviour is the same as Numpy and Julia, reasons can be found in the following <a class="reference external" href="https://mratsim.github.io/Arraymancer/uth.copy_semantics.html">under the hood article</a>.</p>
 
 
 
@@ -211,7 +212,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2017-12-13 22:31:04 UTC</small>
+        <small>Made with Nim. Generated: 2017-12-13 23:30:37 UTC</small>
       </div>
     </div>
   </div>

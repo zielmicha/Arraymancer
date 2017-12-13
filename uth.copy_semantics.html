@@ -110,10 +110,13 @@
 <article id="documentId">
   <div class="container">
     <h1 class="title">Under the hood: Copy semantics</h1>
-    
-<h1 id="safe-vs-unsafe-copy-vs-view">Safe vs unsafe: copy vs view</h1><p>Compared to most frameworks, Arraymancer choose to be safe by default but allows <tt class="docutils literal"><span class="pre">unsafe</span></tt> operations to optimize for speed and memory. The tensor resulting from <tt class="docutils literal"><span class="pre">unsafe</span></tt> operations (no-copy operations) share the underlying storage with the input tensor (also called views or shallow copies). This is often a surprise for beginners.</p>
-<p>In the future Arraymancer will leverage Nim compiler to automatically detect when an original is not used and modified anymore to automatically replace it by the <tt class="docutils literal"><span class="pre">unsafe</span></tt> equivalent.</p>
-<p>For CudaTensors, operations are unsafe by default (including assignmnt with <tt class="docutils literal"><span class="pre">=</span></tt>) while waiting for further Nim optimizations for manually managed memory. CudaTensors can be copied safely with <tt class="docutils literal"><span class="pre">.clone</span></tt></p>
+    <p>WORK IN PROGRESS</p>
+<p>The story and struggles behind Arraymancer current copy semantics is fully detailed in the following issues:</p>
+<blockquote><p><ul class="simple"><li><a class="reference external" href="https://github.com/mratsim/Arraymancer/issues/157">Implement copy-on-write</a></li>
+<li><a class="reference external" href="https://github.com/mratsim/Arraymancer/issues/160">Implement reference semantics</a></li>
+</ul>
+</p></blockquote>
+<p>TO BE CONTINUED</p>
 
 
 
@@ -121,7 +124,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2017-12-13 22:31:04 UTC</small>
+        <small>Made with Nim. Generated: 2017-12-13 23:30:37 UTC</small>
       </div>
     </div>
   </div>

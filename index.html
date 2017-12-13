@@ -115,8 +115,7 @@
 <p>The library is inspired by Numpy and PyTorch. The library provides ergonomics very similar to Numpy, Julia and Matlab but is fully parallel and significantly faster than those libraries. It is also faster than C-based Torch.</p>
 <p>Note: While Nim is compiled and does not offer an interactive REPL yet (like Jupyter), it allows much faster prototyping than C++ due to extremely fast compilation times. Arraymancer compiles in about 5 seconds on my dual-core MacBook.</p>
 
-<h2 id="why-arraymancer">Why Arraymancer</h2><p>I’ve identified several issues I want to tackle with Arraymancer:</p>
-
+<h2 id="why-arraymancer">Why Arraymancer</h2>
 <h3 id="the-python-community-is-struggling-to-bring-numpy-up-to-speed">The Python community is struggling to bring Numpy up-to-speed</h3><ul class="simple"><li>Numba JIT compiler</li>
 <li>Dask delayed parallel computation graph</li>
 <li>Cython to ease numerical computations in Python</li>
@@ -136,18 +135,26 @@
 <p>Note: Arraymancer Cuda/Cudnn backend is shaping up and convolutional neural nets are just around the corner.</p>
 
 <h3 id="bridging-the-gap-between-deep-learning-research-and-production">Bridging the gap between deep learning research and production</h3><p>The deep learning frameworks are currently in two camps: - Research: Theano, Tensorflow, Keras, Torch, PyTorch - Production: Caffe, Darknet, (Tensorflow)</p>
-<p>Putting a research model in production, on a drone or as a webservice for example, is difficult: - Transforming a tuned research model (in Python) to a usable Caffe or Darknet model (in C) is not trivial. ~PMML is supposed to be the “common” XML description of ML models but is not really supported by anyone.~  <strong>Edit - Sept 7, 2017: Microsoft and Facebook are announcing `Open Neural Network Exchange &lt;https://research.fb.com/facebook-and-microsoft-introduce-new-open-ecosystem-for-interchangeable-ai-frameworks/&gt;`__</strong></p>
 <p>Furthermore, Python preprocessing steps, unless using OpenCV, often needs a custom implementation (think text/speech preprocessing on phones).</p>
 <ul class="simple"><li>Tensorflow is supposed to bridge the gap between research and production but its syntax and ergonomics are a pain to work with. It’s the same issue as researchers, “Prototype in Keras, and when you need low-level –&gt; Tensorflow”.</li>
 <li>Deployed models are static, there is no interface to add a new observation/training sample to any framework, the end goal being to use a model as a webservice.</li>
 </ul>
 
-<h3 id="so-why-arraymancer">So why Arraymancer ?</h3><p>All those pain points may seem like a huge undertaking however thanks to the Nim language, we can have Arraymancer: - Be as fast as C - Accelerated routines with Intel MKL/OpenBLAS or even NNPACK - Access to CUDA and CuDNN and generate custom CUDA kernels on the fly via metaprogramming. - A Python-like syntax with custom operators <tt class="docutils literal"><span class="pre">a * b</span></tt> for tensor multiplication instead of <tt class="docutils literal"><span class="pre">a.dot(b)</span></tt> (Numpy/Tensorflow) or <tt class="docutils literal"><span class="pre">a.mm(b)</span></tt> (Torch) - Numpy-like slicing ergonomics <tt class="docutils literal"><span class="pre">t[0..4, 2..10|2]</span></tt></p>
+<h3 id="so-why-arraymancer">So why Arraymancer ?</h3><p>All those pain points may seem like a huge undertaking however thanks to the Nim language, we can have Arraymancer: - Be as fast as C - Accelerated routines with Intel MKL/OpenBLAS or even NNPACK - Access to CUDA and CuDNN and generate custom CUDA kernels on the fly via metaprogramming.</p>
+<blockquote><p><ul class="simple"><li>A Python-like syntax with custom operators <tt class="docutils literal"><span class="pre">a * b</span></tt></li>
+</ul>
+<blockquote><p>for tensor multiplication instead of <tt class="docutils literal"><span class="pre">a.dot(b)</span></tt> (Numpy/Tensorflow) or <tt class="docutils literal"><span class="pre">a.mm(b)</span></tt> (Torch) - Numpy-like slicing ergonomics <tt class="docutils literal"><span class="pre">t[0..4, 2..10|2]</span></tt></p></blockquote>
 <ul class="simple"><li>For everything that Nim doesn’t have yet, you can use Nim bindings to</li>
 </ul>
-<p>C, C++, Objective-C or Javascript to bring it to Nim. Nim also has unofficial Python-&gt;Nim and Nim-&gt;Python wrappers.</p>
+<blockquote><p>C, C++, Objective-C or Javascript to bring it to Nim. Nim also has unofficial Python-&gt;Nim and Nim-&gt;Python wrappers.</p></blockquote>
+</p></blockquote>
 
-<h2 id="future-ambitions">Future ambitions</h2><p>Because apparently to be successful you need a vision, I would like Arraymancer to be: - The go-to tool for Deep Learning video processing. I.e. <tt class="docutils literal"><span class="pre">vid = load_video(&quot;./cats/youtube_cat_video.mkv&quot;)</span></tt> - Target javascript, WebAssembly, Apple Metal, ARM devices, AMD Rocm, OpenCL, you name it. - Target cryptominers FPGAs because they drove the price of GPUs for honest deep-learners too high.</p>
+<h2 id="future-ambitions">Future ambitions</h2><p>Because apparently to be successful you need a vision, I would like Arraymancer to be:</p>
+<ul class="simple"><li>The go-to tool for Deep Learning video processing. I.e. <tt class="docutils literal"><span class="pre">vid = load_video(&quot;./cats/youtube_cat_video.mkv&quot;)</span></tt></li>
+<li>Target javascript, WebAssembly, Apple Metal, ARM devices, AMD Rocm, OpenCL, you name it.</li>
+<li>Target cryptominers FPGAs because they drove the price of GPUs for honest deep-learners too high.</li>
+<li>The base of a Starcraft II AI bot.</li>
+</ul>
 
 <h2 id="support-types-os-hardware">Support (Types, OS, Hardware)</h2><p>Arraymancer’s tensors supports arbitrary types (floats, strings, objects …).</p>
 <p>Arraymancer run anywhere you can compile C code. Linux, MacOS are supported, Windows should work too as Appveyor (Continuous Integration for Windows) never flash red. Optionally you can compile Arraymancer with Cuda support.</p>
@@ -191,7 +198,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2017-12-13 22:31:04 UTC</small>
+        <small>Made with Nim. Generated: 2017-12-13 23:30:37 UTC</small>
       </div>
     </div>
   </div>
